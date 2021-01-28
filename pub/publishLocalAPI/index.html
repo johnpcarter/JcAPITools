@@ -1,0 +1,4988 @@
+<html>
+	<head>
+		<title>jc.api.tools_.services:publishLocalAPIs</title>
+		<meta content="text/html; charset=utf-8" http-equiv=Content-Type>
+		<meta name="GENERATOR" content="webMethods Developer">
+		<style type="text/css">
+		<!--
+			BODY {
+				font-size: 9pt; font-family: "Verdana", "Arial", "Times New Roman"; color: #000000
+			}
+
+			HR {
+				height: 1px;
+				margin: 0px;
+			}
+
+			TABLE {
+				border-left: 0px;
+				border-right: 0px;
+				border-top: 0px;
+				border-bottom: 0px;
+				padding-top: 0px
+				padding-right: 0px;
+				padding-left: 0px;
+				padding-bottom: 0px;
+				font-size: 9pt;
+				font-weight: normal;
+				margin-top: 0px;
+				margin-bottom: 0px;
+			}
+
+			TD {
+				font-family: "Verdana", "Arial", "Times New Roman";
+				font-size: 9pt;
+			}
+
+
+			TABLE.outer {
+				margin-top: 10px;
+				margin-bottom: 10px;
+			}
+
+			A:visited, A:link	{
+				color: #0066CC;
+			}
+
+			A.disable:visited, A.disable:link {
+				color: #A9A9A9;
+			}
+
+			A:active, A.disable:active	{
+				color: #000000;
+			}
+
+			FONT.settings {
+				font-size: 7.5pt;
+			}
+
+			FONT.headings1 {
+				font-size: 18pt;
+			}
+
+			FONT.headings2 {
+				font-size: 11pt;
+				font-weight: 800;
+			}
+
+			FONT.headings3 {
+				font-size: 8pt;
+			}
+
+			FONT.default {
+				font-family: "Verdana", "Arial", "Times New Roman";
+				font-size: 9pt;
+			}
+		-->
+		</style>
+
+		<script language="JavaScript" type="text/javascript">
+		<!--
+			spacer = 4;
+			colcount = 1;
+			anchorCount = 1;
+			linkCount = 1;
+			level= 0;
+
+			function raise(x) {
+				total= 1;
+				for (i=0; i<x; i++) {
+					total*=0.1;
+				}
+			  return total; //result of 0.1 raised to y power
+			}
+
+			function round(number,scale) {
+				// rounds a number to a given scale
+				return Math.round(number * Math.pow(10,scale))/Math.pow(10,scale);
+			}
+
+			function indent(numofspaces) {
+				// indents by writing nonbreaking whitespaces
+				for (n=0; n<numofspaces; n++ ) {
+					document.writeln("&nbsp;");
+				}
+			}
+
+			function calparentlinknumber(lastlink) {
+				// calculates the top level link numbers,such as: 1,2,3
+				var templink;
+				templink = Math.round(lastlink);
+				templink = templink + 1;
+				return templink;
+			}
+
+			function calchildlinknumber(lastlink,level) {
+				//calculates the children link numbers, such as: 1.1, 1.2, 1.3
+				var templink;
+				power = raise( level );
+				templink = lastlink + power;
+				templink = round( templink, level );
+				return templink;
+			}
+
+			function writeLink(serviceisdisabled) {
+				//write the link
+				indent(spacer);
+				document.writeln(linkCount);
+				if (linkCount < 10 )
+					document.writeln("&nbsp;");
+
+				if (serviceisdisabled) {
+					document.writeln("<A class=disable HREF=\"#"+ linkCount + "\">");
+				} else {
+					document.writeln("<A HREF=\"#"+ linkCount + "\">");
+				}
+			}
+
+			function writeAnchor() {
+				//write the anchor reference
+				indent(spacer);
+				document.writeln("<font class=\"default\">"+anchorCount + "<A NAME = \""+ anchorCount + "\">");
+				if (anchorCount < 10 )
+					document.writeln("&nbsp;");
+			}
+
+
+
+		//-->
+		</script>
+	</head>
+
+
+
+
+<body>
+
+<table  cellspacing=0 cellpadding=2 border=0>
+	<tr>
+		
+			<td>
+				 <img src="../resources/server.gif" alt="Server" align="ABSMIDDLE" border="0">
+			</td>
+			<td>
+				<b><font class="settings">Server:</font></b><br>
+				bigfoot.local:5555			</td>
+				
+			<td>
+				&nbsp;&nbsp;<img src="../resources/ns_package.gif" alt="Package" align="ABSMIDDLE" border="0">
+			</td>
+			<td>
+				<b><font class="settings">Package:</font></b><br>
+				JcAPITools			</td>
+				
+			<td>
+				&nbsp;&nbsp;<img src="../resources/ns_interface.gif" alt="Folder" align="ABSMIDDLE" border="0">
+			</td>
+			<td>
+				<b><font class="settings">Folder:</font></b><br>
+				jc.api.tools_.services			</td>
+			</tr>
+</table>
+
+
+<br>
+
+
+	<img src="../resources/ns_flow.gif" alt="Flow Service" border="0">
+	<font class="headings1">publishLocalAPIs</font>
+	<hr noshade>
+
+
+    <font color=gray><pre>## Publishes API to API Gateway ##
+
+Deploys the swagger definition provided the named API descriptor hosted locally.
+
+If the API already exists, will either update the existing version with the new swagger without affecting any meta-data. Alternatively if 'apiAllowUpdate' is false (default)
+will create a new copy of existing API and apply the swagger definition to that.
+
+Caller can also specify a default app, group, maturity and version to be set if creating the API for the first time.
+
+The API will not be activated by default, use the service setAPIAttributes to active it.
+
+#INPUT#
+apiGatewayURL
+apiCredentials - user/password for gateway separated by &quot;:&quot;
+apiAllowAllowUpdate - false by default and creates a new version if API already exists, set to false if you want to update existing API
+apiMaturity - default label to be used if creating new API
+apiGroup - default group to be used if creating new API
+apiVersion - Default version to be used if creating new API
+defaultApp - Creates given app of not yet created and associates it with the API
+apiEndpoint - replaces api endpoint with this in swagger before being published
+apiName - Name of API to deploy
+
+#OUTPUT#
+apis - list of the API's after registration
+	id - Internal id of API associated with API Gateway
+	apiName - name of API as given by swagger
+	apiVersion - version either that of swagger, default or next sequence if creating a new version</pre></font><br><br>
+
+
+
+
+
+	<font class="headings2">Service Input</font>
+	<br><br>
+	
+		
+			<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiGatewayURL												
+				<br>
+		
+			<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiGatewayCredentials												
+				<br>
+		
+			<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiAllowUpdate												
+				<br>
+		
+			<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiMaturity												
+				<br>
+		
+			<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiGroup												
+				<br>
+		
+			<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiVersion												
+				<br>
+		
+			<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> defaultApp												
+				<br>
+		
+			<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+									
+						
+								<img src="../resources/html_field_string_o.gif" alt="String" align="ABSMIDDLE" border="0"> apiEndpoint																		
+				<br>
+		
+			<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+									
+						
+								<img src="../resources/html_field_string_o.gif" alt="String" align="ABSMIDDLE" border="0"> apiName																		
+				<br>
+				<br>
+
+
+
+
+
+	<font class="headings2">Service Output</font>
+	<br><br>
+	
+		
+			<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_recordlist.gif" alt="Document list" align="ABSMIDDLE" border="0"> apis													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> id												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiName												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiVersion												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiDescription												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> maturityState												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/obj_boolean.gif" alt="Boolean" align="ABSMIDDLE" border="0"> isActive															
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> type												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> owner												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> creationDate												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> lastModified												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> apiDefinition													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> type												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> info													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> description												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> version												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> title												
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> serviceRegistryDisplayName												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/pipe_field_objectlist.gif" alt="Object list" align="ABSMIDDLE" border="0"> schemes													
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_stringlist.gif" alt="String list" align="ABSMIDDLE" border="0"> consumes												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_stringlist.gif" alt="String list" align="ABSMIDDLE" border="0"> produces												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/pipe_field_objectlist.gif" alt="Object list" align="ABSMIDDLE" border="0"> security													
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> paths													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> /v1/hello/{name}													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> get													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> description												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> operationId												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_recordlist.gif" alt="Document list" align="ABSMIDDLE" border="0"> parameters													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> in												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> name												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> parameterSchema													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/obj_boolean.gif" alt="Boolean" align="ABSMIDDLE" border="0"> required															
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+		
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> responses													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> 200													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> description												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> content													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> application/json													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> schema													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> $ref												
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> examples													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> links													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> schema													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> examples													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> headers													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> 401													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> description												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> content													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> links													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> schema													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> examples													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> headers													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> mockedResponses													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> 200													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> responseBody													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> application/json												
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> 401													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> responseBody													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> application/json												
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/pipe_field_objectlist.gif" alt="Object list" align="ABSMIDDLE" border="0"> mockedConditionsBasedCustomResponsesList													
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/obj_boolean.gif" alt="Boolean" align="ABSMIDDLE" border="0"> enabled															
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/pipe_field_objectlist.gif" alt="Object list" align="ABSMIDDLE" border="0"> scopes													
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> requestBody													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> content													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> name												
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/pipe_field_objectlist.gif" alt="Object list" align="ABSMIDDLE" border="0"> scopes													
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> displayName												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/obj_boolean.gif" alt="Boolean" align="ABSMIDDLE" border="0"> enabled															
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> /v1/log													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> get													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> description												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> operationId												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> responses													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> 200													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> description												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> content													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> application/json													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> schema													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> $ref												
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> examples													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> links													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> schema													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> examples													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> headers													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> 401													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> description												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> content													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> links													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> schema													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> examples													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> headers													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> mockedResponses													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> 200													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> responseBody													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> application/json												
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> 401													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> responseBody													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> application/json												
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/pipe_field_objectlist.gif" alt="Object list" align="ABSMIDDLE" border="0"> mockedConditionsBasedCustomResponsesList													
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/obj_boolean.gif" alt="Boolean" align="ABSMIDDLE" border="0"> enabled															
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/pipe_field_objectlist.gif" alt="Object list" align="ABSMIDDLE" border="0"> scopes													
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> requestBody													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> content													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> name												
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/pipe_field_objectlist.gif" alt="Object list" align="ABSMIDDLE" border="0"> scopes													
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> displayName												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/obj_boolean.gif" alt="Boolean" align="ABSMIDDLE" border="0"> enabled															
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> /v2/hello/{name}													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> get													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> description												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> operationId												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_recordlist.gif" alt="Document list" align="ABSMIDDLE" border="0"> parameters													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> in												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> name												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> parameterSchema													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/obj_boolean.gif" alt="Boolean" align="ABSMIDDLE" border="0"> required															
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+		
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> responses													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> 200													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> description												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> content													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> application/json													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> schema													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> $ref												
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> examples													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> links													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> schema													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> examples													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> headers													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> 401													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> description												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> content													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> links													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> schema													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> examples													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> headers													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> mockedResponses													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> 200													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> responseBody													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> application/json												
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> 401													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> responseBody													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> application/json												
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/pipe_field_objectlist.gif" alt="Object list" align="ABSMIDDLE" border="0"> mockedConditionsBasedCustomResponsesList													
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/obj_boolean.gif" alt="Boolean" align="ABSMIDDLE" border="0"> enabled															
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/pipe_field_objectlist.gif" alt="Object list" align="ABSMIDDLE" border="0"> scopes													
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> requestBody													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> content													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> name												
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/pipe_field_objectlist.gif" alt="Object list" align="ABSMIDDLE" border="0"> scopes													
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> displayName												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/obj_boolean.gif" alt="Boolean" align="ABSMIDDLE" border="0"> enabled															
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> /v2/log/{owner}													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> get													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> description												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> operationId												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_recordlist.gif" alt="Document list" align="ABSMIDDLE" border="0"> parameters													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> in												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> name												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> parameterSchema													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/obj_boolean.gif" alt="Boolean" align="ABSMIDDLE" border="0"> required															
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+		
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> responses													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> 200													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> description												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> content													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> application/json													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> schema													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> $ref												
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> examples													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> links													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> schema													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> examples													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> headers													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> 401													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> description												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> content													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> links													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> schema													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> examples													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> headers													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> mockedResponses													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> 200													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> responseBody													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> application/json												
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> 401													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> responseBody													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> application/json												
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/pipe_field_objectlist.gif" alt="Object list" align="ABSMIDDLE" border="0"> mockedConditionsBasedCustomResponsesList													
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/obj_boolean.gif" alt="Boolean" align="ABSMIDDLE" border="0"> enabled															
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/pipe_field_objectlist.gif" alt="Object list" align="ABSMIDDLE" border="0"> scopes													
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> requestBody													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> content													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> name												
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/pipe_field_objectlist.gif" alt="Object list" align="ABSMIDDLE" border="0"> scopes													
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> displayName												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/obj_boolean.gif" alt="Boolean" align="ABSMIDDLE" border="0"> enabled															
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> securityDefinitions													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> definitions													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> parameters													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/pipe_field_objectlist.gif" alt="Object list" align="ABSMIDDLE" border="0"> baseUriParameters													
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/pipe_field_objectlist.gif" alt="Object list" align="ABSMIDDLE" border="0"> externalDocs													
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_recordlist.gif" alt="Document list" align="ABSMIDDLE" border="0"> servers													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> url												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> variables													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+		
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> components													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> schemas													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> messages													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> type												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> schema												
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> messages_1													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> type												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> schema												
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> v1helloname_GET_response													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> type												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> schema												
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> v1log_GET_response													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> type												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> schema												
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> v2helloname_GET_response													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> type												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> schema												
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> v2logowner_GET_response													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> type												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> schema												
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> responses													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> parameters													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> examples													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> requestBodies													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> headers													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> links													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> callbacks													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> type												
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_recordlist.gif" alt="Document list" align="ABSMIDDLE" border="0"> nativeEndpoint													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/obj_boolean.gif" alt="Boolean" align="ABSMIDDLE" border="0"> passSecurityHeaders															
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> uri												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/obj_integer_long.gif" alt="Long" align="ABSMIDDLE" border="0"> connectionTimeoutDuration															
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/obj_boolean.gif" alt="Boolean" align="ABSMIDDLE" border="0"> alias															
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+		
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+									
+						
+								<img src="../resources/html_field_record_o.gif" alt="Document" align="ABSMIDDLE" border="0"> mockService																			<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+				
+													<img src="../resources/obj_boolean.gif" alt="Boolean" align="ABSMIDDLE" border="0"> enableMock															
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+									
+						
+								<img src="../resources/html_field_stringlist_o.gif" alt="String list" align="ABSMIDDLE" border="0"> publishedPortals																		
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+		
+				<br>
+				<br>
+
+
+
+
+	<font class="headings2">Flow Overview</font>
+	<br><br>
+	
+		<script language="JavaScript" type="text/javascript">
+	writeLink();
+</script>
+
+
+		<img src="../resources/flow_invoke.gif" alt="Service Invoke" border="0" align="ABSMIDDLE">
+		 INVOKE envProperties<script language="JavaScript" type="text/javascript">
+			document.writeln("</A>");
+	 	</script><br>
+
+			<script language="JavaScript" type="text/javascript">
+			linkCount = calparentlinknumber( linkCount );
+		</script>
+	
+		<script language="JavaScript" type="text/javascript">
+	writeLink();
+</script>
+
+
+		<img src="../resources/flow_branch.gif" alt="Branch" border="0" align="ABSMIDDLE">
+		 BRANCH on<script language="JavaScript" type="text/javascript">
+			document.writeln("</A>");
+	 	</script><br>
+		<script language="JavaScript" type="text/javascript">
+	spacer += 4;
+	level += 1;
+</script>
+
+
+	<script language="JavaScript" type="text/javascript">
+		linkCount = calchildlinknumber(linkCount,level);
+	</script>
+	<script language="JavaScript" type="text/javascript">
+	writeLink();
+</script>
+
+
+		
+				<img src="../resources/flow_sequence.gif" alt="Sequence" border="0" align="ABSMIDDLE">
+				
+	%apiServer/apiGatewayURL% != $null:
+ SEQUENCE<script language="JavaScript" type="text/javascript">
+					document.writeln("</A>");
+			 	</script><br> 	
+		  		<script language="JavaScript" type="text/javascript">
+	spacer += 4;
+	level += 1;
+</script>
+
+
+	<script language="JavaScript" type="text/javascript">
+		linkCount = calchildlinknumber(linkCount,level);
+	</script>
+	<script language="JavaScript" type="text/javascript">
+	writeLink();
+</script>
+
+
+		<img src="../resources/flow_invoke.gif" alt="Service Invoke" border="0" align="ABSMIDDLE">
+		 INVOKE getAPIs<script language="JavaScript" type="text/javascript">
+			document.writeln("</A>");
+	 	</script><br>
+
+	
+	<script language="JavaScript" type="text/javascript">
+		linkCount = calchildlinknumber(linkCount,level);
+	</script>
+	<script language="JavaScript" type="text/javascript">
+	writeLink();
+</script>
+
+
+		<img src="../resources/flow_loop.gif" alt="Loop" border="0" align="ABSMIDDLE">
+		 LOOP OVER&nbsp;'/apis'<script language="JavaScript" type="text/javascript">
+			document.writeln("</A>");
+	 	</script><br>
+		<script language="JavaScript" type="text/javascript">
+	spacer += 4;
+	level += 1;
+</script>
+
+
+	<script language="JavaScript" type="text/javascript">
+		linkCount = calchildlinknumber(linkCount,level);
+	</script>
+	<script language="JavaScript" type="text/javascript">
+	writeLink();
+</script>
+
+
+		<img src="../resources/flow_branch.gif" alt="Branch" border="0" align="ABSMIDDLE">
+		 BRANCH on<script language="JavaScript" type="text/javascript">
+			document.writeln("</A>");
+	 	</script><br>
+		<script language="JavaScript" type="text/javascript">
+	spacer += 4;
+	level += 1;
+</script>
+
+
+	<script language="JavaScript" type="text/javascript">
+		linkCount = calchildlinknumber(linkCount,level);
+	</script>
+	<script language="JavaScript" type="text/javascript">
+	writeLink();
+</script>
+
+
+		
+				<img src="../resources/flow_sequence.gif" alt="Sequence" border="0" align="ABSMIDDLE">
+				
+	%apiName% == $null || %apiName% == %apis/name%:
+ SEQUENCE<script language="JavaScript" type="text/javascript">
+					document.writeln("</A>");
+			 	</script><br> 	
+		  		<script language="JavaScript" type="text/javascript">
+	spacer += 4;
+	level += 1;
+</script>
+
+
+	<script language="JavaScript" type="text/javascript">
+		linkCount = calchildlinknumber(linkCount,level);
+	</script>
+	<script language="JavaScript" type="text/javascript">
+	writeLink();
+</script>
+
+
+		<img src="../resources/flow_invoke.gif" alt="Service Invoke" border="0" align="ABSMIDDLE">
+		 INVOKE debugLog<script language="JavaScript" type="text/javascript">
+			document.writeln("</A>");
+	 	</script><br>
+
+	
+	<script language="JavaScript" type="text/javascript">
+		linkCount = calchildlinknumber(linkCount,level);
+	</script>
+	<script language="JavaScript" type="text/javascript">
+	writeLink();
+</script>
+
+
+		<img src="../resources/flow_invoke.gif" alt="Service Invoke" border="0" align="ABSMIDDLE">
+		 INVOKE getAPISwagger<script language="JavaScript" type="text/javascript">
+			document.writeln("</A>");
+	 	</script><br>
+
+	
+	<script language="JavaScript" type="text/javascript">
+		linkCount = calchildlinknumber(linkCount,level);
+	</script>
+	<script language="JavaScript" type="text/javascript">
+	writeLink();
+</script>
+
+
+		<img src="../resources/flow_branch.gif" alt="Branch" border="0" align="ABSMIDDLE">
+		 BRANCH on<script language="JavaScript" type="text/javascript">
+			document.writeln("</A>");
+	 	</script><br>
+		<script language="JavaScript" type="text/javascript">
+	spacer += 4;
+	level += 1;
+</script>
+
+
+	<script language="JavaScript" type="text/javascript">
+		linkCount = calchildlinknumber(linkCount,level);
+	</script>
+	<script language="JavaScript" type="text/javascript">
+	writeLink();
+</script>
+
+
+		
+				<img src="../resources/flow_sequence.gif" alt="Sequence" border="0" align="ABSMIDDLE">
+				
+	%swaggerWrapper% != $null:
+ SEQUENCE<script language="JavaScript" type="text/javascript">
+					document.writeln("</A>");
+			 	</script><br> 	
+		  		<script language="JavaScript" type="text/javascript">
+	spacer += 4;
+	level += 1;
+</script>
+
+
+	<script language="JavaScript" type="text/javascript">
+		linkCount = calchildlinknumber(linkCount,level);
+	</script>
+	<script language="JavaScript" type="text/javascript">
+	writeLink();
+</script>
+
+
+		<img src="../resources/flow_invoke.gif" alt="Service Invoke" border="0" align="ABSMIDDLE">
+		 INVOKE registerAPI<script language="JavaScript" type="text/javascript">
+			document.writeln("</A>");
+	 	</script><br>
+
+	
+
+<script language="JavaScript" type="text/javascript">
+	spacer -= 4;
+	level -= 1;
+</script>
+
+	
+
+<script language="JavaScript" type="text/javascript">
+	spacer -= 4;
+	level -= 1;
+</script>
+
+	
+
+<script language="JavaScript" type="text/javascript">
+	spacer -= 4;
+	level -= 1;
+</script>
+
+	
+
+<script language="JavaScript" type="text/javascript">
+	spacer -= 4;
+	level -= 1;
+</script>
+
+	
+
+<script language="JavaScript" type="text/javascript">
+	spacer -= 4;
+	level -= 1;
+</script>
+
+	
+
+<script language="JavaScript" type="text/javascript">
+	spacer -= 4;
+	level -= 1;
+</script>
+
+	
+
+<script language="JavaScript" type="text/javascript">
+	spacer -= 4;
+	level -= 1;
+</script>
+
+			<script language="JavaScript" type="text/javascript">
+			linkCount = calparentlinknumber( linkCount );
+		</script>
+	
+		<script language="JavaScript" type="text/javascript">
+	writeLink();
+</script>
+
+
+		<img src="../resources/flow_map.gif" alt="Map" border="0" align="ABSMIDDLE">
+		 MAP<script language="JavaScript" type="text/javascript">
+			document.writeln("</A>");
+	 	</script><br>
+
+			<script language="JavaScript" type="text/javascript">
+			linkCount = calparentlinknumber( linkCount );
+		</script>
+		<br>
+	<br>
+
+	<hr noshade>
+
+	<font class="headings2">Flow Detail</font>
+	<br><br>
+	
+		<script language="JavaScript" type="text/javascript">
+	writeAnchor();
+</script>
+
+
+
+		<img src="../resources/flow_invoke.gif" alt="Service Invoke" align="ABSMIDDLE"><b>  INVOKE&nbsp;jc.api.tools_._priv.tools:envProperties</b><script language="JavaScript" type="text/javascript">
+			document.writeln("</A></font>");
+	 	</script><br>
+		
+
+									
+			
+				
+					
+						<script language="JavaScript" type="text/javascript">
+							var tempSpacer = spacer;
+							spacer = 0;
+						</script>
+						<table class=outer>
+							<tr>
+								<td>
+									<script language="JavaScript" type="text/javascript">indent(tempSpacer+5)</script>
+								</td>
+								<td>
+									<table>
+										<tr bgcolor="#A5CBF7">
+											<td><nobr><b>Pipeline In</b></nobr></td>
+											<td><img src="../resources/spacer.gif" alt="" align="ABSMIDDLE" width="18" height="16" border="0"></td>
+											<td><b>Service In</b></td>
+										</tr>
+										
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiGatewayURL												
+	</nobr></td>
+									<td><img src="../resources/line-map.gif" alt="" align="ABSMIDDLE"></td>
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiGatewayURL												
+	</nobr></td>
+								</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiAllowUpdate												
+	</nobr></td>
+									<td><img src="../resources/line-map.gif" alt="" align="ABSMIDDLE"></td>
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiAllowUpdate												
+	</nobr></td>
+								</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiMaturity												
+	</nobr></td>
+									<td><img src="../resources/line-map.gif" alt="" align="ABSMIDDLE"></td>
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiMaturity												
+	</nobr></td>
+								</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiGroup												
+	</nobr></td>
+									<td><img src="../resources/line-map.gif" alt="" align="ABSMIDDLE"></td>
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiGroup												
+	</nobr></td>
+								</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiVersion												
+	</nobr></td>
+									<td><img src="../resources/line-map.gif" alt="" align="ABSMIDDLE"></td>
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiVersion												
+	</nobr></td>
+								</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> defaultApp												
+	</nobr></td>
+									<td><img src="../resources/line-map.gif" alt="" align="ABSMIDDLE"></td>
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> defaultApp												
+	</nobr></td>
+								</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiGatewayCredentials												
+	</nobr></td>
+									<td><img src="../resources/line-map.gif" alt="" align="ABSMIDDLE"></td>
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiGatewayCredentials												
+	</nobr></td>
+								</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+						<script language="JavaScript" type="text/javascript">
+							spacer = tempSpacer;
+						</script>
+									
+
+							
+				
+
+				
+					
+						<script language="JavaScript" type="text/javascript">
+							var tempSpacer = spacer;
+							spacer = 0;
+						</script>
+						<table class=outer>
+							<tr>
+								<td>
+								<script language="JavaScript" type="text/javascript">indent(tempSpacer+5)</script>
+								</td>
+								<td>
+									<table>
+										<tr bgcolor="#A5CBF7">
+											<td><b>Service Out</b></td>
+											<td><img src="../resources/spacer.gif" alt="" align="ABSMIDDLE" width="18" height="16" border="0"></td>
+											<td><b>Pipeline Out</b></td>
+										</tr>
+										
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+											<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiGatewayURL												
+	<img src="../resources/map_drop.gif" alt="Variable dropped" align="ABSMIDDLE" border="0"></nobr></td>
+												</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+											<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiUser												
+	<img src="../resources/map_drop.gif" alt="Variable dropped" align="ABSMIDDLE" border="0"></nobr></td>
+												</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+											<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiPassword												
+	<img src="../resources/map_drop.gif" alt="Variable dropped" align="ABSMIDDLE" border="0"></nobr></td>
+												</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+											<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiAllowUpdate												
+	<img src="../resources/map_drop.gif" alt="Variable dropped" align="ABSMIDDLE" border="0"></nobr></td>
+												</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+											<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiMaturity												
+	<img src="../resources/map_drop.gif" alt="Variable dropped" align="ABSMIDDLE" border="0"></nobr></td>
+												</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+											<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiGroup												
+	<img src="../resources/map_drop.gif" alt="Variable dropped" align="ABSMIDDLE" border="0"></nobr></td>
+												</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+											<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiVersion												
+	<img src="../resources/map_drop.gif" alt="Variable dropped" align="ABSMIDDLE" border="0"></nobr></td>
+												</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+											<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> defaultApp												
+	<img src="../resources/map_drop.gif" alt="Variable dropped" align="ABSMIDDLE" border="0"></nobr></td>
+												</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+						<script language="JavaScript" type="text/javascript">
+							spacer = tempSpacer;
+						</script>
+													
+
+	
+		<script language="JavaScript" type="text/javascript">
+			anchorCount = calparentlinknumber( anchorCount );
+		</script>
+		<br>
+	
+		<script language="JavaScript" type="text/javascript">
+	writeAnchor();
+</script>
+
+
+
+		<img src="../resources/flow_branch.gif" alt="Branch" align="ABSMIDDLE" border="0"><b>  BRANCH on</b><script language="JavaScript" type="text/javascript">
+			document.writeln("</A></font>");
+	 	</script><br>
+		
+	<table>
+		<tr>
+			<td><nobr>	
+				<script language="JavaScript" type="text/javascript">indent(spacer+5)</script>
+			</nobr></td>
+			<td>
+				<table>
+					<tr>
+						<td><font color=gray>If API Gateway info provided, publish any APIs found on local server</font></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+
+
+									
+	<script language="JavaScript" type="text/javascript">
+		spacer += 6;
+		colcount += 1;
+		level += 1;
+	</script>
+
+	
+		<script language="JavaScript" type="text/javascript">
+			anchorCount = calchildlinknumber(anchorCount,level);
+		</script>
+		<script language="JavaScript" type="text/javascript">
+	writeAnchor();
+</script>
+
+
+
+		
+				<img src="../resources/flow_sequence.gif" alt="Sequence" align="ABSMIDDLE" border="0"><b> 
+	%apiServer/apiGatewayURL% != $null:
+ SEQUENCE</b><script language="JavaScript" type="text/javascript">
+					document.writeln("</A></font>");
+			 	</script><br> 	
+					
+
+									
+	<script language="JavaScript" type="text/javascript">
+		spacer += 6;
+		colcount += 1;
+		level += 1;
+	</script>
+
+	
+		<script language="JavaScript" type="text/javascript">
+			anchorCount = calchildlinknumber(anchorCount,level);
+		</script>
+		<script language="JavaScript" type="text/javascript">
+	writeAnchor();
+</script>
+
+
+
+		<img src="../resources/flow_invoke.gif" alt="Service Invoke" align="ABSMIDDLE"><b>  INVOKE&nbsp;jc.api.tools_._priv.tools:getAPIs</b><script language="JavaScript" type="text/javascript">
+			document.writeln("</A></font>");
+	 	</script><br>
+		
+
+									
+			
+				
+									
+
+							
+				
+
+				
+													
+
+	
+	
+		<script language="JavaScript" type="text/javascript">
+			anchorCount = calchildlinknumber(anchorCount,level);
+		</script>
+		<script language="JavaScript" type="text/javascript">
+	writeAnchor();
+</script>
+
+
+
+		<img src="../resources/flow_loop.gif" alt="Loop" align="ABSMIDDLE" border="0"><b>  LOOP over&nbsp;'/apis'</b><script language="JavaScript" type="text/javascript">
+			document.writeln("</A></font>");
+	 	</script><br>
+		
+
+									
+	<script language="JavaScript" type="text/javascript">
+		spacer += 6;
+		colcount += 1;
+		level += 1;
+	</script>
+
+	
+		<script language="JavaScript" type="text/javascript">
+			anchorCount = calchildlinknumber(anchorCount,level);
+		</script>
+		<script language="JavaScript" type="text/javascript">
+	writeAnchor();
+</script>
+
+
+
+		<img src="../resources/flow_branch.gif" alt="Branch" align="ABSMIDDLE" border="0"><b>  BRANCH on</b><script language="JavaScript" type="text/javascript">
+			document.writeln("</A></font>");
+	 	</script><br>
+		
+	<table>
+		<tr>
+			<td><nobr>	
+				<script language="JavaScript" type="text/javascript">indent(spacer+5)</script>
+			</nobr></td>
+			<td>
+				<table>
+					<tr>
+						<td><font color=gray>Publish all unless apiName provided</font></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+
+
+									
+	<script language="JavaScript" type="text/javascript">
+		spacer += 6;
+		colcount += 1;
+		level += 1;
+	</script>
+
+	
+		<script language="JavaScript" type="text/javascript">
+			anchorCount = calchildlinknumber(anchorCount,level);
+		</script>
+		<script language="JavaScript" type="text/javascript">
+	writeAnchor();
+</script>
+
+
+
+		
+				<img src="../resources/flow_sequence.gif" alt="Sequence" align="ABSMIDDLE" border="0"><b> 
+	%apiName% == $null || %apiName% == %apis/name%:
+ SEQUENCE</b><script language="JavaScript" type="text/javascript">
+					document.writeln("</A></font>");
+			 	</script><br> 	
+					
+
+									
+	<script language="JavaScript" type="text/javascript">
+		spacer += 6;
+		colcount += 1;
+		level += 1;
+	</script>
+
+	
+		<script language="JavaScript" type="text/javascript">
+			anchorCount = calchildlinknumber(anchorCount,level);
+		</script>
+		<script language="JavaScript" type="text/javascript">
+	writeAnchor();
+</script>
+
+
+
+		<img src="../resources/flow_invoke.gif" alt="Service Invoke" align="ABSMIDDLE"><b>  INVOKE&nbsp;pub.flow:debugLog</b><script language="JavaScript" type="text/javascript">
+			document.writeln("</A></font>");
+	 	</script><br>
+		
+
+									
+			
+				
+					
+						<script language="JavaScript" type="text/javascript">
+							var tempSpacer = spacer;
+							spacer = 0;
+						</script>
+						<table class=outer>
+							<tr>
+								<td>
+									<script language="JavaScript" type="text/javascript">indent(tempSpacer+5)</script>
+								</td>
+								<td>
+									<table>
+										<tr bgcolor="#A5CBF7">
+											<td><nobr><b>Pipeline In</b></nobr></td>
+											<td><img src="../resources/spacer.gif" alt="" align="ABSMIDDLE" width="18" height="16" border="0"></td>
+											<td><b>Service In</b></td>
+										</tr>
+										
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td><nobr>
+						<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> function												
+											<img src="../resources/map_default.gif" alt="Variable set value" align="ABSMIDDLE" border="0">
+											
+							"** API **"
+															</nobr></td>
+				</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td><nobr>
+						<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> message												
+											<img src="../resources/map_default.gif" alt="Variable set value" align="ABSMIDDLE" border="0">
+											
+							"Publishing API '%apis/name%' to Gateway %apiServer/apiGatewayURL%"
+															</nobr></td>
+				</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+						<script language="JavaScript" type="text/javascript">
+							spacer = tempSpacer;
+						</script>
+									
+
+								
+
+	
+	
+		<script language="JavaScript" type="text/javascript">
+			anchorCount = calchildlinknumber(anchorCount,level);
+		</script>
+		<script language="JavaScript" type="text/javascript">
+	writeAnchor();
+</script>
+
+
+
+		<img src="../resources/flow_invoke.gif" alt="Service Invoke" align="ABSMIDDLE"><b>  INVOKE&nbsp;jc.api.tools_._priv.tools:getAPISwagger</b><script language="JavaScript" type="text/javascript">
+			document.writeln("</A></font>");
+	 	</script><br>
+		
+
+									
+			
+				
+					
+						<script language="JavaScript" type="text/javascript">
+							var tempSpacer = spacer;
+							spacer = 0;
+						</script>
+						<table class=outer>
+							<tr>
+								<td>
+									<script language="JavaScript" type="text/javascript">indent(tempSpacer+5)</script>
+								</td>
+								<td>
+									<table>
+										<tr bgcolor="#A5CBF7">
+											<td><nobr><b>Pipeline In</b></nobr></td>
+											<td><img src="../resources/spacer.gif" alt="" align="ABSMIDDLE" width="18" height="16" border="0"></td>
+											<td><b>Service In</b></td>
+										</tr>
+										
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> name												
+	</nobr></td>
+									<td><img src="../resources/line-map.gif" alt="" align="ABSMIDDLE"></td>
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> name												
+	</nobr></td>
+								</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> basePath												
+	</nobr></td>
+									<td><img src="../resources/line-map.gif" alt="" align="ABSMIDDLE"></td>
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> basePath												
+	</nobr></td>
+								</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> swagger												
+	</nobr></td>
+									<td><img src="../resources/line-map.gif" alt="" align="ABSMIDDLE"></td>
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> swagger												
+	</nobr></td>
+								</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+						<script language="JavaScript" type="text/javascript">
+							spacer = tempSpacer;
+						</script>
+									
+
+							
+				
+
+				
+					
+						<script language="JavaScript" type="text/javascript">
+							var tempSpacer = spacer;
+							spacer = 0;
+						</script>
+						<table class=outer>
+							<tr>
+								<td>
+								<script language="JavaScript" type="text/javascript">indent(tempSpacer+5)</script>
+								</td>
+								<td>
+									<table>
+										<tr bgcolor="#A5CBF7">
+											<td><b>Service Out</b></td>
+											<td><img src="../resources/spacer.gif" alt="" align="ABSMIDDLE" width="18" height="16" border="0"></td>
+											<td><b>Pipeline Out</b></td>
+										</tr>
+										
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+											<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> swagger												
+	<img src="../resources/map_drop.gif" alt="Variable dropped" align="ABSMIDDLE" border="0"></nobr></td>
+												</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+											<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> name												
+	<img src="../resources/map_drop.gif" alt="Variable dropped" align="ABSMIDDLE" border="0"></nobr></td>
+												</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+											<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> basePath												
+	<img src="../resources/map_drop.gif" alt="Variable dropped" align="ABSMIDDLE" border="0"></nobr></td>
+												</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+						<script language="JavaScript" type="text/javascript">
+							spacer = tempSpacer;
+						</script>
+													
+
+	
+	
+		<script language="JavaScript" type="text/javascript">
+			anchorCount = calchildlinknumber(anchorCount,level);
+		</script>
+		<script language="JavaScript" type="text/javascript">
+	writeAnchor();
+</script>
+
+
+
+		<img src="../resources/flow_branch.gif" alt="Branch" align="ABSMIDDLE" border="0"><b>  BRANCH on</b><script language="JavaScript" type="text/javascript">
+			document.writeln("</A></font>");
+	 	</script><br>
+		
+	<table>
+		<tr>
+			<td><nobr>	
+				<script language="JavaScript" type="text/javascript">indent(spacer+5)</script>
+			</nobr></td>
+			<td>
+				<table>
+					<tr>
+						<td><font color=gray>Only post if we have summink!</font></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+
+
+									
+	<script language="JavaScript" type="text/javascript">
+		spacer += 6;
+		colcount += 1;
+		level += 1;
+	</script>
+
+	
+		<script language="JavaScript" type="text/javascript">
+			anchorCount = calchildlinknumber(anchorCount,level);
+		</script>
+		<script language="JavaScript" type="text/javascript">
+	writeAnchor();
+</script>
+
+
+
+		
+				<img src="../resources/flow_sequence.gif" alt="Sequence" align="ABSMIDDLE" border="0"><b> 
+	%swaggerWrapper% != $null:
+ SEQUENCE</b><script language="JavaScript" type="text/javascript">
+					document.writeln("</A></font>");
+			 	</script><br> 	
+					
+
+									
+	<script language="JavaScript" type="text/javascript">
+		spacer += 6;
+		colcount += 1;
+		level += 1;
+	</script>
+
+	
+		<script language="JavaScript" type="text/javascript">
+			anchorCount = calchildlinknumber(anchorCount,level);
+		</script>
+		<script language="JavaScript" type="text/javascript">
+	writeAnchor();
+</script>
+
+
+
+		<img src="../resources/flow_invoke.gif" alt="Service Invoke" align="ABSMIDDLE"><b>  INVOKE&nbsp;jc.api.tools_._priv.gateway:registerAPI</b><script language="JavaScript" type="text/javascript">
+			document.writeln("</A></font>");
+	 	</script><br>
+		
+
+									
+			
+				
+					
+						<script language="JavaScript" type="text/javascript">
+							var tempSpacer = spacer;
+							spacer = 0;
+						</script>
+						<table class=outer>
+							<tr>
+								<td>
+									<script language="JavaScript" type="text/javascript">indent(tempSpacer+5)</script>
+								</td>
+								<td>
+									<table>
+										<tr bgcolor="#A5CBF7">
+											<td><nobr><b>Pipeline In</b></nobr></td>
+											<td><img src="../resources/spacer.gif" alt="" align="ABSMIDDLE" width="18" height="16" border="0"></td>
+											<td><b>Service In</b></td>
+										</tr>
+										
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiGroup												
+	</nobr></td>
+									<td><img src="../resources/line-map.gif" alt="" align="ABSMIDDLE"></td>
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_recordlistref.gif" alt="Document list reference" align="ABSMIDDLE" border="0"> apiGroups&nbsp;(PostAPI)									
+				<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+		
+	</nobr></td>
+								</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiMaturity												
+	</nobr></td>
+									<td><img src="../resources/line-map.gif" alt="" align="ABSMIDDLE"></td>
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_recordref.gif" alt="Document reference" align="ABSMIDDLE" border="0"> maturityState&nbsp;(PostAPI)													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+	</nobr></td>
+								</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiVersion												
+	</nobr></td>
+									<td><img src="../resources/line-map.gif" alt="" align="ABSMIDDLE"></td>
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_recordref.gif" alt="Document reference" align="ABSMIDDLE" border="0"> apiVersion&nbsp;(PostAPI)													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+	</nobr></td>
+								</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+						<script language="JavaScript" type="text/javascript">
+							spacer = tempSpacer;
+						</script>
+									
+
+							
+				
+
+				
+					
+						<script language="JavaScript" type="text/javascript">
+							var tempSpacer = spacer;
+							spacer = 0;
+						</script>
+						<table class=outer>
+							<tr>
+								<td>
+								<script language="JavaScript" type="text/javascript">indent(tempSpacer+5)</script>
+								</td>
+								<td>
+									<table>
+										<tr bgcolor="#A5CBF7">
+											<td><b>Service Out</b></td>
+											<td><img src="../resources/spacer.gif" alt="" align="ABSMIDDLE" width="18" height="16" border="0"></td>
+											<td><b>Pipeline Out</b></td>
+										</tr>
+										
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+											<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_recordref.gif" alt="Document reference" align="ABSMIDDLE" border="0"> swaggerWrapper&nbsp;(PostAPI)													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+	<img src="../resources/map_drop.gif" alt="Variable dropped" align="ABSMIDDLE" border="0"></nobr></td>
+												</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+											<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> api													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+	<img src="../resources/map_drop.gif" alt="Variable dropped" align="ABSMIDDLE" border="0"></nobr></td>
+												</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> api													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+	</nobr></td>
+									<td><img src="../resources/line-map.gif" alt="" align="ABSMIDDLE"></td>
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> apisOut													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+	</nobr></td>
+								</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+						<script language="JavaScript" type="text/javascript">
+							spacer = tempSpacer;
+						</script>
+													
+
+	
+	
+	<script language="JavaScript" type="text/javascript">
+		spacer -= 6;
+		colcount -= 1;
+		level -= 1;
+	</script>
+
+	
+	
+	<script language="JavaScript" type="text/javascript">
+		spacer -= 6;
+		colcount -= 1;
+		level -= 1;
+	</script>
+
+	
+	
+	<script language="JavaScript" type="text/javascript">
+		spacer -= 6;
+		colcount -= 1;
+		level -= 1;
+	</script>
+
+	
+	
+	<script language="JavaScript" type="text/javascript">
+		spacer -= 6;
+		colcount -= 1;
+		level -= 1;
+	</script>
+
+	
+	
+	<script language="JavaScript" type="text/javascript">
+		spacer -= 6;
+		colcount -= 1;
+		level -= 1;
+	</script>
+
+	
+	
+	<script language="JavaScript" type="text/javascript">
+		spacer -= 6;
+		colcount -= 1;
+		level -= 1;
+	</script>
+
+	
+	
+	<script language="JavaScript" type="text/javascript">
+		spacer -= 6;
+		colcount -= 1;
+		level -= 1;
+	</script>
+
+	
+		<script language="JavaScript" type="text/javascript">
+			anchorCount = calparentlinknumber( anchorCount );
+		</script>
+		<br>
+	
+		<script language="JavaScript" type="text/javascript">
+	writeAnchor();
+</script>
+
+
+
+		<img src="../resources/flow_map.gif" alt="Map" align="ABSMIDDLE" border="0"><b>  MAP</b><script language="JavaScript" type="text/javascript">
+			document.writeln("</A></font>");
+	 	</script><br>
+		
+	<table>
+		<tr>
+			<td><nobr>	
+				<script language="JavaScript" type="text/javascript">indent(spacer+5)</script>
+			</nobr></td>
+			<td>
+				<table>
+					<tr>
+						<td><font color=gray>cleanup</font></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+
+
+									
+			
+				<script language="JavaScript" type="text/javascript">
+					var tempSpacer = spacer;
+					spacer = 0;
+				</script>
+				<table class=outer>
+					<tr>
+						<td>
+							<script language="JavaScript" type="text/javascript">indent(tempSpacer+5)</script>
+						</td>
+						<td>
+							<table>
+								<tr bgcolor="#A5CBF7">
+									<td><b>Source</b></td>
+									<td><img src="../resources/spacer.gif" alt="" align="ABSMIDDLE" width="18" height="16" border="0"></td>
+									<td><b>Destination</b></td>
+								</tr>
+								
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_recordlist.gif" alt="Document list" align="ABSMIDDLE" border="0"> apisOut													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+		
+	</nobr></td>
+									<td><img src="../resources/line-map.gif" alt="" align="ABSMIDDLE"></td>
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_recordlist.gif" alt="Document list" align="ABSMIDDLE" border="0"> apis													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+		
+	</nobr></td>
+								</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+											<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_recordlist.gif" alt="Document list" align="ABSMIDDLE" border="0"> apisOut													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+		
+	<img src="../resources/map_drop.gif" alt="Variable dropped" align="ABSMIDDLE" border="0"></nobr></td>
+												</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+											<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiName												
+	<img src="../resources/map_drop.gif" alt="Variable dropped" align="ABSMIDDLE" border="0"></nobr></td>
+												</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+											<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiEndpoint												
+	<img src="../resources/map_drop.gif" alt="Variable dropped" align="ABSMIDDLE" border="0"></nobr></td>
+												</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+											<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> apiGatewayCredentials												
+	<img src="../resources/map_drop.gif" alt="Variable dropped" align="ABSMIDDLE" border="0"></nobr></td>
+												</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+											<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_record.gif" alt="Document" align="ABSMIDDLE" border="0"> apiServer													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+	<img src="../resources/map_drop.gif" alt="Variable dropped" align="ABSMIDDLE" border="0"></nobr></td>
+												</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+											<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> function												
+	<img src="../resources/map_drop.gif" alt="Variable dropped" align="ABSMIDDLE" border="0"></nobr></td>
+												</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+											<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> message												
+	<img src="../resources/map_drop.gif" alt="Variable dropped" align="ABSMIDDLE" border="0"></nobr></td>
+												</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+				<script language="JavaScript" type="text/javascript">
+					spacer = tempSpacer;
+				</script>
+					
+		
+	
+		<script language="JavaScript" type="text/javascript">
+			anchorCount = calparentlinknumber( anchorCount );
+		</script>
+		<br>
+	
+<hr noshade>
+	<p align="right"><font class="headings3">Generated by webMethods Designer: January 21, 2020 6:43:05 PM CET</font></p>
+</body>
+</html>
+
+
+

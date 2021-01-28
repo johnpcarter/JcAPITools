@@ -1,0 +1,932 @@
+<html>
+	<head>
+		<title>jc.api.tools_.services:listLocalAPIs</title>
+		<meta content="text/html; charset=utf-8" http-equiv=Content-Type>
+		<meta name="GENERATOR" content="webMethods Developer">
+		<style type="text/css">
+		<!--
+			BODY {
+				font-size: 9pt; font-family: "Verdana", "Arial", "Times New Roman"; color: #000000
+			}
+
+			HR {
+				height: 1px;
+				margin: 0px;
+			}
+
+			TABLE {
+				border-left: 0px;
+				border-right: 0px;
+				border-top: 0px;
+				border-bottom: 0px;
+				padding-top: 0px
+				padding-right: 0px;
+				padding-left: 0px;
+				padding-bottom: 0px;
+				font-size: 9pt;
+				font-weight: normal;
+				margin-top: 0px;
+				margin-bottom: 0px;
+			}
+
+			TD {
+				font-family: "Verdana", "Arial", "Times New Roman";
+				font-size: 9pt;
+			}
+
+
+			TABLE.outer {
+				margin-top: 10px;
+				margin-bottom: 10px;
+			}
+
+			A:visited, A:link	{
+				color: #0066CC;
+			}
+
+			A.disable:visited, A.disable:link {
+				color: #A9A9A9;
+			}
+
+			A:active, A.disable:active	{
+				color: #000000;
+			}
+
+			FONT.settings {
+				font-size: 7.5pt;
+			}
+
+			FONT.headings1 {
+				font-size: 18pt;
+			}
+
+			FONT.headings2 {
+				font-size: 11pt;
+				font-weight: 800;
+			}
+
+			FONT.headings3 {
+				font-size: 8pt;
+			}
+
+			FONT.default {
+				font-family: "Verdana", "Arial", "Times New Roman";
+				font-size: 9pt;
+			}
+		-->
+		</style>
+
+		<script language="JavaScript" type="text/javascript">
+		<!--
+			spacer = 4;
+			colcount = 1;
+			anchorCount = 1;
+			linkCount = 1;
+			level= 0;
+
+			function raise(x) {
+				total= 1;
+				for (i=0; i<x; i++) {
+					total*=0.1;
+				}
+			  return total; //result of 0.1 raised to y power
+			}
+
+			function round(number,scale) {
+				// rounds a number to a given scale
+				return Math.round(number * Math.pow(10,scale))/Math.pow(10,scale);
+			}
+
+			function indent(numofspaces) {
+				// indents by writing nonbreaking whitespaces
+				for (n=0; n<numofspaces; n++ ) {
+					document.writeln("&nbsp;");
+				}
+			}
+
+			function calparentlinknumber(lastlink) {
+				// calculates the top level link numbers,such as: 1,2,3
+				var templink;
+				templink = Math.round(lastlink);
+				templink = templink + 1;
+				return templink;
+			}
+
+			function calchildlinknumber(lastlink,level) {
+				//calculates the children link numbers, such as: 1.1, 1.2, 1.3
+				var templink;
+				power = raise( level );
+				templink = lastlink + power;
+				templink = round( templink, level );
+				return templink;
+			}
+
+			function writeLink(serviceisdisabled) {
+				//write the link
+				indent(spacer);
+				document.writeln(linkCount);
+				if (linkCount < 10 )
+					document.writeln("&nbsp;");
+
+				if (serviceisdisabled) {
+					document.writeln("<A class=disable HREF=\"#"+ linkCount + "\">");
+				} else {
+					document.writeln("<A HREF=\"#"+ linkCount + "\">");
+				}
+			}
+
+			function writeAnchor() {
+				//write the anchor reference
+				indent(spacer);
+				document.writeln("<font class=\"default\">"+anchorCount + "<A NAME = \""+ anchorCount + "\">");
+				if (anchorCount < 10 )
+					document.writeln("&nbsp;");
+			}
+
+
+
+		//-->
+		</script>
+	</head>
+
+
+
+
+<body>
+
+<table  cellspacing=0 cellpadding=2 border=0>
+	<tr>
+		
+			<td>
+				 <img src="../resources/server.gif" alt="Server" align="ABSMIDDLE" border="0">
+			</td>
+			<td>
+				<b><font class="settings">Server:</font></b><br>
+				bigfoot.local:5555			</td>
+				
+			<td>
+				&nbsp;&nbsp;<img src="../resources/ns_package.gif" alt="Package" align="ABSMIDDLE" border="0">
+			</td>
+			<td>
+				<b><font class="settings">Package:</font></b><br>
+				JcAPITools			</td>
+				
+			<td>
+				&nbsp;&nbsp;<img src="../resources/ns_interface.gif" alt="Folder" align="ABSMIDDLE" border="0">
+			</td>
+			<td>
+				<b><font class="settings">Folder:</font></b><br>
+				jc.api.tools_.services			</td>
+			</tr>
+</table>
+
+
+<br>
+
+
+	<img src="../resources/ns_flow.gif" alt="Flow Service" border="0">
+	<font class="headings1">listLocalAPIs</font>
+	<hr noshade>
+
+
+    <font color=gray><pre>## Returns a list of all APIs that are hosted within the local container ##
+
+Scan all packages, checking for API Descriptors.
+
+#INPUT#
+none
+
+#OUTPUT#
+apis - (Document list)
+	name - title of API
+	basePath - root url to use when calling API
+	swagger - url to invoke in order to fetch API Definition
+	package - Name of package to which API belongs.</pre></font><br><br>
+
+
+
+
+
+	<font class="headings2">Service Input</font>
+	<br><br>
+			<script language="JavaScript" type="text/javascript">indent(spacer)</script>
+		<font color="red">none</font>
+		<br>
+		<br>
+
+
+
+
+
+	<font class="headings2">Service Output</font>
+	<br><br>
+	
+		
+			<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_recordlist.gif" alt="Document list" align="ABSMIDDLE" border="0"> apis													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> name												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> basePath												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> swagger												
+		
+
+	<br>
+	<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> package												
+		
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+		
+				<br>
+				<br>
+
+
+
+
+	<font class="headings2">Flow Overview</font>
+	<br><br>
+	
+		<script language="JavaScript" type="text/javascript">
+	writeLink();
+</script>
+
+
+		<img src="../resources/flow_invoke.gif" alt="Service Invoke" border="0" align="ABSMIDDLE">
+		 INVOKE getTransportInfo<script language="JavaScript" type="text/javascript">
+			document.writeln("</A>");
+	 	</script><br>
+
+			<script language="JavaScript" type="text/javascript">
+			linkCount = calparentlinknumber( linkCount );
+		</script>
+	
+		<script language="JavaScript" type="text/javascript">
+	writeLink();
+</script>
+
+
+		<img src="../resources/flow_invoke.gif" alt="Service Invoke" border="0" align="ABSMIDDLE">
+		 INVOKE getAPIs<script language="JavaScript" type="text/javascript">
+			document.writeln("</A>");
+	 	</script><br>
+
+			<script language="JavaScript" type="text/javascript">
+			linkCount = calparentlinknumber( linkCount );
+		</script>
+	
+		<script language="JavaScript" type="text/javascript">
+	writeLink();
+</script>
+
+
+		<img src="../resources/flow_branch.gif" alt="Branch" border="0" align="ABSMIDDLE">
+		 BRANCH on<script language="JavaScript" type="text/javascript">
+			document.writeln("</A>");
+	 	</script><br>
+		<script language="JavaScript" type="text/javascript">
+	spacer += 4;
+	level += 1;
+</script>
+
+
+	<script language="JavaScript" type="text/javascript">
+		linkCount = calchildlinknumber(linkCount,level);
+	</script>
+	<script language="JavaScript" type="text/javascript">
+	writeLink();
+</script>
+
+
+		
+				<img src="../resources/flow_sequence.gif" alt="Sequence" border="0" align="ABSMIDDLE">
+				
+	%/transport/http/requestHdrs/Accept% == $null || %/transport/http/requestHdrs/Accept% = &quot;*/*&quot;:
+ SEQUENCE<script language="JavaScript" type="text/javascript">
+					document.writeln("</A>");
+			 	</script><br> 	
+		  		<script language="JavaScript" type="text/javascript">
+	spacer += 4;
+	level += 1;
+</script>
+
+
+	<script language="JavaScript" type="text/javascript">
+		linkCount = calchildlinknumber(linkCount,level);
+	</script>
+	<script language="JavaScript" type="text/javascript">
+	writeLink();
+</script>
+
+
+		<img src="../resources/flow_map.gif" alt="Map" border="0" align="ABSMIDDLE">
+		 MAP<script language="JavaScript" type="text/javascript">
+			document.writeln("</A>");
+	 	</script><br>
+
+	
+	<script language="JavaScript" type="text/javascript">
+		linkCount = calchildlinknumber(linkCount,level);
+	</script>
+	<script language="JavaScript" type="text/javascript">
+	writeLink();
+</script>
+
+
+		<img src="../resources/flow_invoke.gif" alt="Service Invoke" border="0" align="ABSMIDDLE">
+		 INVOKE flattenStringList<script language="JavaScript" type="text/javascript">
+			document.writeln("</A>");
+	 	</script><br>
+
+	
+	<script language="JavaScript" type="text/javascript">
+		linkCount = calchildlinknumber(linkCount,level);
+	</script>
+	<script language="JavaScript" type="text/javascript">
+	writeLink();
+</script>
+
+
+		<img src="../resources/flow_invoke.gif" alt="Service Invoke" border="0" align="ABSMIDDLE">
+		 INVOKE setResponse2<script language="JavaScript" type="text/javascript">
+			document.writeln("</A>");
+	 	</script><br>
+
+	
+
+<script language="JavaScript" type="text/javascript">
+	spacer -= 4;
+	level -= 1;
+</script>
+
+	
+
+<script language="JavaScript" type="text/javascript">
+	spacer -= 4;
+	level -= 1;
+</script>
+
+			<script language="JavaScript" type="text/javascript">
+			linkCount = calparentlinknumber( linkCount );
+		</script>
+	
+		<script language="JavaScript" type="text/javascript">
+	writeLink();
+</script>
+
+
+		<img src="../resources/flow_map.gif" alt="Map" border="0" align="ABSMIDDLE">
+		 MAP<script language="JavaScript" type="text/javascript">
+			document.writeln("</A>");
+	 	</script><br>
+
+			<script language="JavaScript" type="text/javascript">
+			linkCount = calparentlinknumber( linkCount );
+		</script>
+		<br>
+	<br>
+
+	<hr noshade>
+
+	<font class="headings2">Flow Detail</font>
+	<br><br>
+	
+		<script language="JavaScript" type="text/javascript">
+	writeAnchor();
+</script>
+
+
+
+		<img src="../resources/flow_invoke.gif" alt="Service Invoke" align="ABSMIDDLE"><b>  INVOKE&nbsp;pub.flow:getTransportInfo</b><script language="JavaScript" type="text/javascript">
+			document.writeln("</A></font>");
+	 	</script><br>
+		
+
+									
+			
+				
+
+				
+													
+
+	
+		<script language="JavaScript" type="text/javascript">
+			anchorCount = calparentlinknumber( anchorCount );
+		</script>
+		<br>
+	
+		<script language="JavaScript" type="text/javascript">
+	writeAnchor();
+</script>
+
+
+
+		<img src="../resources/flow_invoke.gif" alt="Service Invoke" align="ABSMIDDLE"><b>  INVOKE&nbsp;jc.api.tools_._priv.tools:getAPIs</b><script language="JavaScript" type="text/javascript">
+			document.writeln("</A></font>");
+	 	</script><br>
+		
+
+									
+			
+				
+
+				
+													
+
+	
+		<script language="JavaScript" type="text/javascript">
+			anchorCount = calparentlinknumber( anchorCount );
+		</script>
+		<br>
+	
+		<script language="JavaScript" type="text/javascript">
+	writeAnchor();
+</script>
+
+
+
+		<img src="../resources/flow_branch.gif" alt="Branch" align="ABSMIDDLE" border="0"><b>  BRANCH on</b><script language="JavaScript" type="text/javascript">
+			document.writeln("</A></font>");
+	 	</script><br>
+		
+	<table>
+		<tr>
+			<td><nobr>	
+				<script language="JavaScript" type="text/javascript">indent(spacer+5)</script>
+			</nobr></td>
+			<td>
+				<table>
+					<tr>
+						<td><font color=gray>if no formal accept type or */* then reurn simple comma separated string</font></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+
+
+									
+	<script language="JavaScript" type="text/javascript">
+		spacer += 6;
+		colcount += 1;
+		level += 1;
+	</script>
+
+	
+		<script language="JavaScript" type="text/javascript">
+			anchorCount = calchildlinknumber(anchorCount,level);
+		</script>
+		<script language="JavaScript" type="text/javascript">
+	writeAnchor();
+</script>
+
+
+
+		
+				<img src="../resources/flow_sequence.gif" alt="Sequence" align="ABSMIDDLE" border="0"><b> 
+	%/transport/http/requestHdrs/Accept% == $null || %/transport/http/requestHdrs/Accept% = &quot;*/*&quot;:
+ SEQUENCE</b><script language="JavaScript" type="text/javascript">
+					document.writeln("</A></font>");
+			 	</script><br> 	
+					
+	<table>
+		<tr>
+			<td><nobr>	
+				<script language="JavaScript" type="text/javascript">indent(spacer+5)</script>
+			</nobr></td>
+			<td>
+				<table>
+					<tr>
+						<td><font color=gray>if no accept type, then set output to comma separated list of names only</font></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+
+
+									
+	<script language="JavaScript" type="text/javascript">
+		spacer += 6;
+		colcount += 1;
+		level += 1;
+	</script>
+
+	
+		<script language="JavaScript" type="text/javascript">
+			anchorCount = calchildlinknumber(anchorCount,level);
+		</script>
+		<script language="JavaScript" type="text/javascript">
+	writeAnchor();
+</script>
+
+
+
+		<img src="../resources/flow_map.gif" alt="Map" align="ABSMIDDLE" border="0"><b>  MAP</b><script language="JavaScript" type="text/javascript">
+			document.writeln("</A></font>");
+	 	</script><br>
+		
+	<table>
+		<tr>
+			<td><nobr>	
+				<script language="JavaScript" type="text/javascript">indent(spacer+5)</script>
+			</nobr></td>
+			<td>
+				<table>
+					<tr>
+						<td><font color=gray>pull names</font></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+
+
+									
+			
+				<script language="JavaScript" type="text/javascript">
+					var tempSpacer = spacer;
+					spacer = 0;
+				</script>
+				<table class=outer>
+					<tr>
+						<td>
+							<script language="JavaScript" type="text/javascript">indent(tempSpacer+5)</script>
+						</td>
+						<td>
+							<table>
+								<tr bgcolor="#A5CBF7">
+									<td><b>Source</b></td>
+									<td><img src="../resources/spacer.gif" alt="" align="ABSMIDDLE" width="18" height="16" border="0"></td>
+									<td><b>Destination</b></td>
+								</tr>
+								
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> name												
+	</nobr></td>
+									<td><img src="../resources/line-map.gif" alt="" align="ABSMIDDLE"></td>
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_stringlist.gif" alt="String list" align="ABSMIDDLE" border="0"> names												
+	</nobr></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+				<script language="JavaScript" type="text/javascript">
+					spacer = tempSpacer;
+				</script>
+					
+		
+	
+	
+		<script language="JavaScript" type="text/javascript">
+			anchorCount = calchildlinknumber(anchorCount,level);
+		</script>
+		<script language="JavaScript" type="text/javascript">
+	writeAnchor();
+</script>
+
+
+
+		<img src="../resources/flow_invoke.gif" alt="Service Invoke" align="ABSMIDDLE"><b>  INVOKE&nbsp;jc.api.tools_._priv.tools:flattenStringList</b><script language="JavaScript" type="text/javascript">
+			document.writeln("</A></font>");
+	 	</script><br>
+		
+
+									
+			
+				
+					
+						<script language="JavaScript" type="text/javascript">
+							var tempSpacer = spacer;
+							spacer = 0;
+						</script>
+						<table class=outer>
+							<tr>
+								<td>
+									<script language="JavaScript" type="text/javascript">indent(tempSpacer+5)</script>
+								</td>
+								<td>
+									<table>
+										<tr bgcolor="#A5CBF7">
+											<td><nobr><b>Pipeline In</b></nobr></td>
+											<td><img src="../resources/spacer.gif" alt="" align="ABSMIDDLE" width="18" height="16" border="0"></td>
+											<td><b>Service In</b></td>
+										</tr>
+										
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_stringlist.gif" alt="String list" align="ABSMIDDLE" border="0"> names												
+	</nobr></td>
+									<td><img src="../resources/line-map.gif" alt="" align="ABSMIDDLE"></td>
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_stringlist.gif" alt="String list" align="ABSMIDDLE" border="0"> list												
+	</nobr></td>
+								</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+						<script language="JavaScript" type="text/javascript">
+							spacer = tempSpacer;
+						</script>
+									
+
+							
+				
+
+				
+					
+						<script language="JavaScript" type="text/javascript">
+							var tempSpacer = spacer;
+							spacer = 0;
+						</script>
+						<table class=outer>
+							<tr>
+								<td>
+								<script language="JavaScript" type="text/javascript">indent(tempSpacer+5)</script>
+								</td>
+								<td>
+									<table>
+										<tr bgcolor="#A5CBF7">
+											<td><b>Service Out</b></td>
+											<td><img src="../resources/spacer.gif" alt="" align="ABSMIDDLE" width="18" height="16" border="0"></td>
+											<td><b>Pipeline Out</b></td>
+										</tr>
+										
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+											<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_stringlist.gif" alt="String list" align="ABSMIDDLE" border="0"> names												
+	<img src="../resources/map_drop.gif" alt="Variable dropped" align="ABSMIDDLE" border="0"></nobr></td>
+												</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+											<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_stringlist.gif" alt="String list" align="ABSMIDDLE" border="0"> list												
+	<img src="../resources/map_drop.gif" alt="Variable dropped" align="ABSMIDDLE" border="0"></nobr></td>
+												</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+						<script language="JavaScript" type="text/javascript">
+							spacer = tempSpacer;
+						</script>
+													
+
+	
+	
+		<script language="JavaScript" type="text/javascript">
+			anchorCount = calchildlinknumber(anchorCount,level);
+		</script>
+		<script language="JavaScript" type="text/javascript">
+	writeAnchor();
+</script>
+
+
+
+		<img src="../resources/flow_invoke.gif" alt="Service Invoke" align="ABSMIDDLE"><b>  INVOKE&nbsp;pub.flow:setResponse2</b><script language="JavaScript" type="text/javascript">
+			document.writeln("</A></font>");
+	 	</script><br>
+		
+
+									
+			
+				
+					
+						<script language="JavaScript" type="text/javascript">
+							var tempSpacer = spacer;
+							spacer = 0;
+						</script>
+						<table class=outer>
+							<tr>
+								<td>
+									<script language="JavaScript" type="text/javascript">indent(tempSpacer+5)</script>
+								</td>
+								<td>
+									<table>
+										<tr bgcolor="#A5CBF7">
+											<td><nobr><b>Pipeline In</b></nobr></td>
+											<td><img src="../resources/spacer.gif" alt="" align="ABSMIDDLE" width="18" height="16" border="0"></td>
+											<td><b>Service In</b></td>
+										</tr>
+										
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td><nobr>
+						<script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> contentType												
+											<img src="../resources/map_default.gif" alt="Variable set value" align="ABSMIDDLE" border="0">
+											
+							"text/plain"
+															</nobr></td>
+				</tr>
+
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> string												
+	</nobr></td>
+									<td><img src="../resources/line-map.gif" alt="" align="ABSMIDDLE"></td>
+				
+					<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_string.gif" alt="String" align="ABSMIDDLE" border="0"> responseString												
+	</nobr></td>
+								</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+						<script language="JavaScript" type="text/javascript">
+							spacer = tempSpacer;
+						</script>
+									
+
+								
+
+	
+	
+	<script language="JavaScript" type="text/javascript">
+		spacer -= 6;
+		colcount -= 1;
+		level -= 1;
+	</script>
+
+	
+	
+	<script language="JavaScript" type="text/javascript">
+		spacer -= 6;
+		colcount -= 1;
+		level -= 1;
+	</script>
+
+	
+		<script language="JavaScript" type="text/javascript">
+			anchorCount = calparentlinknumber( anchorCount );
+		</script>
+		<br>
+	
+		<script language="JavaScript" type="text/javascript">
+	writeAnchor();
+</script>
+
+
+
+		<img src="../resources/flow_map.gif" alt="Map" align="ABSMIDDLE" border="0"><b>  MAP</b><script language="JavaScript" type="text/javascript">
+			document.writeln("</A></font>");
+	 	</script><br>
+		
+	<table>
+		<tr>
+			<td><nobr>	
+				<script language="JavaScript" type="text/javascript">indent(spacer+5)</script>
+			</nobr></td>
+			<td>
+				<table>
+					<tr>
+						<td><font color=gray>cleanup</font></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+
+
+									
+			
+				<script language="JavaScript" type="text/javascript">
+					var tempSpacer = spacer;
+					spacer = 0;
+				</script>
+				<table class=outer>
+					<tr>
+						<td>
+							<script language="JavaScript" type="text/javascript">indent(tempSpacer+5)</script>
+						</td>
+						<td>
+							<table>
+								<tr bgcolor="#A5CBF7">
+									<td><b>Source</b></td>
+									<td><img src="../resources/spacer.gif" alt="" align="ABSMIDDLE" width="18" height="16" border="0"></td>
+									<td><b>Destination</b></td>
+								</tr>
+								
+	<tr valign="bottom" bgcolor="#EFEFEF">
+		
+				
+											<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td><nobr><script language="JavaScript" type="text/javascript">indent(spacer);</script>
+
+
+		
+															<img src="../resources/pipe_field_recordref.gif" alt="Document reference" align="ABSMIDDLE" border="0"> transport&nbsp;(transportInfo)													<script language="JavaScript" type="text/javascript">
+	spacer = spacer + 2;
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+	spacer = spacer - 2;
+</script>
+			
+	<img src="../resources/map_drop.gif" alt="Variable dropped" align="ABSMIDDLE" border="0"></nobr></td>
+												</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+				<script language="JavaScript" type="text/javascript">
+					spacer = tempSpacer;
+				</script>
+					
+		
+	
+		<script language="JavaScript" type="text/javascript">
+			anchorCount = calparentlinknumber( anchorCount );
+		</script>
+		<br>
+	
+<hr noshade>
+	<p align="right"><font class="headings3">Generated by webMethods Designer: January 21, 2020 6:42:16 PM CET</font></p>
+</body>
+</html>
+
+
+

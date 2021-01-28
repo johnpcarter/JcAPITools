@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Values version="2.0">
+  <value name="node_type">interface</value>
+  <value name="node_subtype">unknown</value>
+  <value name="node_nsName">jc.api.tools_._priv.tools</value>
+  <value name="is_public">false</value>
+  <value name="shared">Ck1hcDxTdHJpbmcsIFN0cmluZz4geHJlZiA9IG5ldyBIYXNoTWFwPFN0cmluZywgU3RyaW5nPigp
+Ow==</value>
+  <value name="encodeutf8">true</value>
+  <value name="extends"></value>
+  <array name="implements" type="value" depth="1">
+  </array>
+  <array name="imports" type="value" depth="1">
+    <value>java.util.ArrayList</value>
+    <value>java.util.HashMap</value>
+    <value>java.util.List</value>
+    <value>java.util.Map</value>
+    <value>java.util.StringTokenizer</value>
+    <value>com.jc.wm.introspection.APIInfo</value>
+    <value>com.jc.wm.introspection.PackageIntrospector</value>
+    <value>com.wm.app.b2b.server.ServerAPI</value>
+    <value>com.wm.app.b2b.server.ServerStartupNotifier</value>
+  </array>
+</Values>

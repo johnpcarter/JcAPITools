@@ -1,0 +1,7 @@
+v1.0 - JC - January 22nd 2020 
+============================
+First official release, nothing to say really.
+Includes Jenkins templates showing how to use API.
+Also useful services for finding API's in your IS
+
+	http://localhost:5555/invoke/jc.api.tools_.services/listLocalAPIs

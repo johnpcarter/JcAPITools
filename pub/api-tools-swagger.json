@@ -1,0 +1,235 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API Integration tools for webMethods",
+    "description": "A complimentary set of services and API's to simplify deploying API's from your webMethods runtime containers or git repositories to your webMethods API Gateway\n\n\
+    **API Gateway settings**\n\
+    endpoints and credentials for your API Gateway can be set via environment variables to facilitate integration with your CI/CD pipeline, thus starting up your MSR as a docker container can
+    be pre-configured via build environment parameters or at runtime via container environment parameters. The full list is; \n\
+    - api_gateway_url: fully qualified url of webMethods API Gateway to publish to.\n\
+    - api_gateway_user: The API Gateway user id to use for publishing.\n\
+    - api_gateway_password: Indicates whether password is present.\n\
+    - api_gateway_allow_update: true if allowed, otherwise pre-existing api's will not be updated.\n\
+    - api_gateway_default_maturity: default maturity tag to be set when publishing API's.\n\
+    - api_gateway_default_group: default API grouping to be set when publishing API's.\n\
+    - api_gateway_default_version: version to be set when publishing API's.\n\
+    - api_gateway_default_app: default app to be associated with API being published.\n\
+    ",
+    "version": "v1.2.0"
+  },
+  "host": "localhost:5555",
+  "schemes": [
+    "http", "https"
+  ],
+  "basePath": "/rad/jc.api:api/tools",
+  "paths": {
+    "/local": {
+      "get": {
+        "summary": "Lists all API's hosted by this webMethods runtime container",
+        "tags": ["Introspect"],
+        "description": "service: ##jc.api.tools_.services:listLocalAPIs##\n\n*Returns a list of all APIs that are hosted within this runtime*\n\nScan all packages, checking for API Descriptors and returning a summary.\n\n**INPUT**\nnone\n\n**OUTPUT**\n- apis: (Document list)\n\t- name: title of API.\n\t- basePath: root url to use when calling API.\n\t- swagger: url to invoke in order to fetch API Definition.\n\t- package: Name of package to which API belongs.",
+        "operationId": "13ed23fb-b1ec-43c5-8605-eb89194f87e5",
+        "responses": {
+          "default": {
+            "description": "no response description was provided for this operation"
+          }
+        },
+        "parameters": []
+      }
+    },
+    "/local/publish": {
+      "post": {
+        "summary": "Publishes all API's hosted locally to the webMethods API Gateway",
+        "tags": ["Introspect"],
+        "description": "service: ##jc.api.tools_.services:publishLocalAPIs##\n\n**Deploys all API's found in this runtime to your webMethods API Gateway**\n\nIf the API already exists, will either update the existing version with the new swagger without affecting any meta-data. \nAlternatively if 'apiAllowUpdate' is false (default) will create a new copy of existing API and apply the swagger definition to that.\n\nThe API will not be activated by default, use the service setAPIAttributes to active it.\n\n*NOTE* - All inputs are optional as you can instead set defaults using environment variables (refer to service gatewaySettings), thus\nallowing you dynamically deploy your API's from docker containers without having to hard-code end-points, tags or versioning\nof any kind.\n\n**INPUT**\n- apiGatewayURL: fully qualified URL for the API gateway to deploy the API to.\n- apiCredentials: user/password for gateway separated by \":\".\n- apiAllowAllowUpdate: false by default and creates a new version if API already exists, set to false if you want to update existing API.\n- apiMaturity: default label to be used if creating new API.\n- apiGroup: default group to be used if creating new API.\n- apiVersion: Default version to be used if creating new API.\n- defaultApp: Creates given app of not yet created and associates it with the API.\n- apiEndpoint: replaces api endpoint with this in swagger before being published.\n- apiName: Name of API to deploy.\n\n**OUTPUT**\n- apis: list of the API's after registration.\n\t- id: Internal id of API associated with API Gateway.\n\t- apiName: name of API as given by swagger.\n\t- apiVersion: version either that of swagger, default or next sequence if creating a new version.",
+        "operationId": "fafabd0e-5635-47de-87e1-975353f2f0ba",
+        "parameters": [
+          {
+            "type": "string",
+            "default": "",
+            "name": "apiName",
+            "required": true,
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "no response description was provided for this operation"
+          }
+        }
+      }
+    },
+    "/gateway/api": {
+      "post": {
+        "summary": "Redeploys the given API from default gateway to another via promotion",
+        "tags": ["Manage"],
+        "description": "service: ##jc.api.tools_.services:redeployAPI#\n\n*Deploy an API from a source API Gateway to another using promotion*\n\nThe API must have already been published to an source API Gateway either specified explicitly or defined\nthrough environment variables.\n\nOptionally can also publish the API from the targeted API Gateway to an associated API Portal, or\nfrom the source gateway if no staging has been indicated.\n\n**INPUT**\n- apiServer: (optional) Only provide if you have not set environment variables or wish to override them\n\t- apiGatewayURL: fully qualified URL for the API gateway to deploy the API to.\n\t- apiCredentials - user/password for gateway separated by \":\".\n- apiName: Name of API to deploy.\n- apiVersion: Version of API to deploy (or latest if omitted).\n- where: (staging parameters)\n\t- stageName: (Optional) If provided, used with promotion to promote API to server indicated by stage,\n\t- otherwise assume that you only want to publish the API from the source gateway to the indicated Portal.\n\t- reason: Label for promotion.\n\t- description: Detailed label for promotion.\n\t- portalName: If provided will attempt to publish API to the given Portal.\n\n**OUTPUT**\nnone",
+        "operationId": "724d1160-f291-4cd1-a48f-25d103ca6ca1",
+        "parameters": [
+          {
+            "type": "string",
+            "default": "",
+            "name": "apiName",
+            "required": true,
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "default": "",
+            "name": "apiVersion",
+            "required": true,
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": ""
+            },
+            "in": "body",
+            "name": "body"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "no response description was provided for this operation"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Rollbacks the last deployment made via promotion (see above)",
+        "tags": ["Manage"],
+        "description": "service: ##jc.api.tools_.services:rollbackAPI##\n\n*Rollbacks the last promotion and publication to the API Gateway*\n\nShould only be used after using deployAPI service in order to cancel any changes.\nWill first unpublish the API from the given API Portal if provided, then it will rollback the API changes from the target API Gateway as indicated by the given stage.\nIf the stage is omitted, then API will be unpubished from the given API Gateway, otherwise it will be removed from the API portal associated with the API Gateway associated with the stage!\n\nIf the stage is omitted, then the API will only be removed from the associated API Portal.\n\n#INPUT#\n- apiServer: (optional) allows environment settings to overridden.\n\t- apiGatewayURL: fully qualified URL for the API gateway to deploy the API to.\n\t- apiCredentials : user/password for gateway separated by \":\"\n- apiName: Name of API to undeploy.\n- apiVersion: Version of API to undeploy (or latest if omitted).\n- where:\n\t- stageName: If provided, used by promotion to rollback the API changes .\n\t- reason: Label for rollback.\n\t- description: Detailed label for rollback.\n\t- portalName: If provided will remove API from given API Portal as determined the immediate API Gateway if stage omitted, alternatively will remove\n\t\t\tthe API from the Portal associated with the API Gateway as defined by the stage name.\n\n**OUTPUT**\n- portalError: error message if unpublish from Portal failed.\n\n**EXCEPTION**\nRollback from gateway will be reported as an exception.",
+        "operationId": "369cde8c-55de-4093-9c2b-5d9f53cc2b81",
+        "parameters": [
+          {
+            "type": "string",
+            "default": "",
+            "name": "apiName",
+            "required": true,
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "default": "",
+            "name": "apiVersion",
+            "required": true,
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": ""
+            },
+            "in": "body",
+            "name": "body"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "no response description was provided for this operation"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Updates the meta-data of the API definition in the API Gateway, such as tags and whether it is active",
+        "tags": ["Manage"],
+        "description": "service: ##jc.api.tools_.services:setAPIAttributes##\n\n*Allows existing API meta-data to be modified*\n\nUse this service for instance to activate an API that was previously published using the services 'jc.api.tools_.services:publishAPI'\nor 'jc.api.tools_.services:publishLocalAPIs'\n\n**INPUT**\n- apiServer: (optional) allows environment settings to be overridden\n\tapiGatewayURL: fully qualified URL for the API gateway to deploy the API to.\n\tapiCredentials - user/password for gateway separated by \":\".\n- apiName: Name of API to deploy.\n- apiVersion: Version of API to deploy (or latest if omitted).\n- maturity: value to be used in maturity label.\n- groups: comma separated list of groups that the API will be associated with.\n- isActive:  (boolean) true if the API should be activated, false if it shoulf be deactivated.\n\n**OUTPUT**\nnone",
+        "operationId": "8fe69728-6665-4690-865d-8dbdf98db12a",
+        "parameters": [
+          {
+            "type": "string",
+            "default": "",
+            "name": "apiVersion",
+            "required": true,
+            "in": "header"
+          },
+          {
+            "type": "string",
+            "default": "",
+            "name": "maturity",
+            "required": true,
+            "in": "header"
+          },
+          {
+            "type": "string",
+            "default": "",
+            "name": "groups",
+            "required": true,
+            "in": "header"
+          },
+          {
+            "type": "string",
+            "default": "",
+            "name": "isActive",
+            "required": true,
+            "in": "header"
+          },
+          {
+            "type": "string",
+            "default": "",
+            "name": "apiName",
+            "required": true,
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": ""
+            },
+            "in": "body",
+            "name": "body"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "no response description was provided for this operation"
+          }
+        }
+      }
+    },
+    "/publish": {
+      "post": {
+        "summary": "Publishes an API swagger hosted in a GIT repository to your webMethods API Gateway",
+        "tags": ["Manage"],
+        "description": "service: ## Publishes API to API Gateway ##\n\nDeploys the swagger definition provided by the where section (url or git) and publishes it to the API Gateway.\n\nIf the API already exists, will either update the existing version with the new swagger without affecting any meta-data. Alternatively if 'apiAllowUpdate' is false (default)\nwill create a new copy of existing API and apply the swagger definition to that.\n\nCaller can also specify a default app, group, maturity and version to be set if creating the API for the first time.\n\nThe API will not be activated by default, use the service setAPIAttributes to active it.\n\n**INPUT**\n- apiServer: (optional) overrides local environment variables\n\t- apiGatewayURL:  fully qualified URL for the API gateway to deploy the API to.\n\t- apiCredentials: user/password for gateway separated by \":\".\n\t- apiAllowAllowUpdate: false by default and creates a new version if API already exists, set to false if you want to update existing API.\n\t- apiMaturity: default label to be used if creating new API.\n\t- apiGroup: default group to be used if creating new API.\n\t- apiVersion: Default version to be used if creating new API.\n\t- defaultApp: Creates given app of not yet created and associates it with the API.\n\t- apiEndpoint: replaces api endpoint with this in swagger before being published.\n- apiName: Name of API to deploy\n- from: (optional) if omitted, assumes API is hosted locally\n\t- swaggerURL: remote server hosting swagger definition\n\t- swaggerCredentials: required if above url is secured, formatted as user/password separated by \":\"\n\t- gitUrl: Alternative to swagger, fetches swagger file from given git repo\n\t- gitToken: optional access token for access to git \n\t- gitPath: sub-folder in git repo containing swagger files.\n\n**OUTPUT**\n- apisOut: list of the API's after registration\n\t- id: Internal id of API associated with API Gateway.\n\t- apiName: name of API as given by swagger.\n\t- apiVersion: version either that of swagger, default or next sequence if creating a new version.",
+        "operationId": "695ccc6a-80fe-4bd6-87e4-d52c491d4fe6",
+        "parameters": [
+          {
+            "type": "string",
+            "default": "",
+            "name": "apiName",
+            "required": true,
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": ""
+            },
+            "in": "body",
+            "name": "body"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "no response description was provided for this operation"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+      {
+        "name": "Introspect",
+        "description": "locally hosted API's and publish them"
+      },
+      {
+        "name": "Manage",
+        "description": "API's in your webMethods API gateway and Portal"
+      }
+  ]
+}
