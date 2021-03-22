@@ -7,6 +7,9 @@
   <value name="node_pkg">JcAPITools</value>
   <value name="node_comment">Lookup local APIs as well as allows you publish, promote local API's or GIT hostes API's to your webMethods API Gateway &amp; Portal.</value>
   <value name="is_public">false</value>
+  <null name="sourceUri"/>
+  <null name="swaggerUrl"/>
+  <Boolean name="modifiable">true</Boolean>
   <record name="generalInfo" javaclass="com.wm.util.Values">
     <value name="specVersion">2.0</value>
     <value name="hostName">localhost:5555</value>
@@ -36,9 +39,6 @@
       <null name="licenseUrl"/>
     </record>
   </record>
-  <null name="sourceUri"/>
-  <null name="swaggerUrl"/>
-  <Boolean name="modifiable">true</Boolean>
   <record name="restDefinitions" javaclass="com.wm.util.Values">
     <record name="jc.api.tools_.services:publishAPI.apis.apiDefinition.paths./v1/log.get.responses.200.content.application/json.schema" javaclass="com.wm.util.Values">
       <value name="name">schema_20</value>
@@ -1684,6 +1684,18 @@
       <record name="parameters" javaclass="com.wm.util.Values">
         <record name="swaggerURL" javaclass="com.wm.util.Values">
           <value name="name">swaggerURL</value>
+          <value name="source">FORMDATA</value>
+          <value name="type">STRING</value>
+          <null name="description"/>
+          <Boolean name="isRequired">true</Boolean>
+          <Boolean name="isArray">false</Boolean>
+          <null name="defaultValue"/>
+          <null name="refDefinition"/>
+          <null name="definitionName"/>
+          <Boolean name="includeInRad">true</Boolean>
+        </record>
+        <record name="swaggerUser" javaclass="com.wm.util.Values">
+          <value name="name">swaggerUser</value>
           <value name="source">FORMDATA</value>
           <value name="type">STRING</value>
           <null name="description"/>
@@ -7880,7 +7892,7 @@
           <null name="defaultValue"/>
           <value name="refDefinition">jc.api.tools_.services:listLocalAPIs.apis</value>
           <value name="definitionName">apis</value>
-          <Boolean name="includeInRad">false</Boolean>
+          <Boolean name="includeInRad">true</Boolean>
         </record>
       </record>
     </record>
@@ -8654,6 +8666,9 @@ of any kind.
 	- id: Internal id of API associated with API Gateway.
 	- apiName: name of API as given by swagger.
 	- apiVersion: version either that of swagger, default or next sequence if creating a new version.</value>
+          <array name="consumes" type="value" depth="1">
+            <value>application/x-www-form-urlencoded</value>
+          </array>
           <array name="requiredDefinitions" type="value" depth="1">
             <value>jc.api.tools_.services:publishLocalAPIs.apis</value>
             <value>jc.api.tools_.services:publishLocalAPIs.apis.apiDefinition</value>

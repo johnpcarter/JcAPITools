@@ -281,7 +281,7 @@ public final class tools
 		
 		String lv = "1.0";
 		
-		if (v == null) {
+		if (v == null || v.length() == 0) {
 			v = System.getenv("image_version");
 			
 			if (v != null) {
