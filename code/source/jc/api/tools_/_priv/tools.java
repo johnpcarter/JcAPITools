@@ -366,6 +366,19 @@ public final class tools
 			else
 				IDataUtil.put(c, "primaryPort", "" + ServerAPI.getCurrentPort());
 		}
+		
+		if (System.getenv("api_server_user") != null) {
+			IDataUtil.put(c,  "user", System.getenv("api_server_user"));
+		} else {
+			IDataUtil.put(c,  "user", "Administrator");
+		}
+		
+		if (System.getenv("api_server_password") != null) {
+			IDataUtil.put(c,  "password", System.getenv("api_server_password"));
+		} else {
+			IDataUtil.put(c,  "password", "manage");
+		}
+		
 		c.destroy();
 		// --- <<IS-END>> ---
 
