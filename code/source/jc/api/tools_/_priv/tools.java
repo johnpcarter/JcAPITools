@@ -323,6 +323,8 @@ public final class tools
 		// [o] field:0:required httpPrefix
 		// [o] field:0:required server
 		// [o] field:0:optional primaryPort
+		// [o] field:0:required user
+		// [o] field:0:required password
 		IDataCursor c = pipeline.getCursor();
 		
 		if (System.getenv("api_server_url") != null && System.getenv("api_server_url").length() > 0) {
