@@ -2,7 +2,7 @@
 
 A complimentary set of services and API's to simplify deploying API's from your webMethods runtime containers or git repositories to your webMethods API Gateway
 
-API documentation can be view [here](https://raw.githack.com/johnpcarter/JcAPITools/main/pub/index.html)  
+API documentation can be viewed [here](https://raw.githack.com/johnpcarter/JcAPITools/main/pub/index.html)  
 Service documentation is available in Designer via the comments of each service or via the packages home directory [/JcAPITools](http://localhost:5555/JcAPITools/services.dsp)
 
 **Installation**
