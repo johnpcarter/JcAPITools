@@ -196,11 +196,10 @@ public final class tools
 		// [o] - field:0:required swagger
 		// pipeline  in
 		
-		IDataCursor pipelineCursor = pipeline.getCursor();
 			
 		// process
 		
-		APIInfo[] apis = PackageIntrospector.defaultInstance("./packages", false).apis();
+		APIInfo[] apis = PackageIntrospector.defaultInstance("default", "./packages", null, false).apis();
 		
 		List<IData> out = new ArrayList<IData>();
 		
