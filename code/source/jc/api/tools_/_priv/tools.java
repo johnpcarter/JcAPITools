@@ -199,7 +199,7 @@ public final class tools
 			
 		// process
 		
-		APIInfo[] apis = PackageIntrospector.defaultInstance("default", "./packages", null, false).apis();
+		APIInfo[] apis = PackageIntrospector.defaultInstance("default", "./packages", null, true).apis();
 		
 		List<IData> out = new ArrayList<IData>();
 		
