@@ -7,6 +7,7 @@ import com.wm.util.Values;
 import com.wm.app.b2b.server.Service;
 import com.wm.app.b2b.server.ServiceException;
 // --- <<IS-START-IMPORTS>> ---
+import com.wm.util.Config;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -283,7 +284,7 @@ public final class tools
 		if (v == null || v.length() == 0) {
 			v = System.getenv("image_version");
 			
-			if (v != null) {
+			if (v != null && !v.equals("null")) {
 				if (v.contains(".")) {
 					int dot = v.indexOf(".");
 					String major = v.substring(0, dot);
@@ -358,14 +359,16 @@ public final class tools
 				IDataUtil.put(c, "primaryPort", port);
 			
 		} else {
-			IDataUtil.put(c, "server", ServerAPI.getServerName());
+			IDataUtil.put(c, "server", Config.getProperty(ServerAPI.getServerName(), "watt.net.localhost"));
 		
 			IDataUtil.put(c, "httpPrefix", "http://");
 			
-			if (ServerAPI.getCurrentPort() == -1)
-				IDataUtil.put(c, "primaryPort", "5555");
-			else
-				IDataUtil.put(c, "primaryPort", "" + ServerAPI.getCurrentPort());
+			int port = ServerAPI.getCurrentPort();
+			
+			if (port == -1)
+				port = 5555;
+			
+			IDataUtil.put(c, "primaryPort", Config.getProperty("" + port, "watt.server.port"));
 		}
 		
 		if (System.getenv("api_server_user") != null) {

@@ -12,6 +12,7 @@ Ow==</value>
   <array name="implements" type="value" depth="1">
   </array>
   <array name="imports" type="value" depth="1">
+    <value>com.wm.util.Config</value>
     <value>java.util.ArrayList</value>
     <value>java.util.HashMap</value>
     <value>java.util.List</value>
