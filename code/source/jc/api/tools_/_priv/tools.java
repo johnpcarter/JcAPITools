@@ -159,7 +159,7 @@ public final class tools
 			for (String e : list) {
 				
 				if (postfix != null) {
-					e += ":" + postfix;
+					e += "/" + postfix;
 				}
 				
 				if (format != null)
