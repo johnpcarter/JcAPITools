@@ -282,25 +282,27 @@ public final class tools
 		String lv = "1.0";
 		
 		if (v == null || v.length() == 0) {
-			v = System.getenv("image_version");
+			v = System.getenv("api_gateway_default_version");
 			
 			if (v != null && !v.equals("null")) {
-				if (v.contains(".")) {
-					int dot = v.indexOf(".");
-					String major = v.substring(0, dot);
-					String minor = v.substring(dot+1);
-					
-					if (minor.contains(".")) {
-						// ignore patches
-						
-						minor = minor.substring(0, minor.indexOf("."));
-					}
-					
-					lv = major + "." + minor;
-				} else {
-					lv = v;
-				}
+				lv = v;
 			}
+		} else {
+			lv = v;
+		}
+		
+		if (lv.contains(".")) {
+			int dot = lv.indexOf(".");
+			String major = lv.substring(0, dot);
+			String minor = lv.substring(dot+1);
+			
+			if (minor.contains(".")) {
+				// ignore patches
+				
+				minor = minor.substring(0, minor.indexOf("."));
+			}
+			
+			lv = major + "." + minor;
 		} else {
 			lv = v;
 		}
